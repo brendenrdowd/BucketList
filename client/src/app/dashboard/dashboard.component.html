@@ -1,0 +1,36 @@
+<div id="navbar">
+    <h4 class="nav">Welcome, {{userName}}!</h4>
+    <a  class="nav"href="/logout">Log out</a>
+</div>
+<div>
+    <form (submit)="newItem()">
+        <h5 *ngIf="errMsg.length > 0">{{errMsg}}</h5>
+        <input type="text" placeholder="Title" name="title" [(ngModel)]="list.title">
+        <input type="text" name="desc" placeholder="Description" [(ngModel)]="list.desc">
+        <select name="users" [(ngModel)]="list.users">
+            <ng-container *ngFor="let u of allUsers">
+                <option value="{{u._id}}">{{u.name}}</option>
+            </ng-container>
+        </select>
+        <input type="submit" value="Add">
+    </form>
+</div>
+
+<!-- Bucket List -->
+<h2>Before I die I want to:</h2>
+<ul *ngFor="let item of allItems">
+    <li>
+        <ng-container *ngIf="item.creator == userName">
+            <input type="checkbox" class="listitem" name="{{item._id}}" value="{{item._id}}" (click)="checkbox(item._id)"> <!--disable if not user-->
+        </ng-container>
+        <p class="listitem">{{item.creator}} | {{item.title}} - {{item.desc}} - {{item.createdAt | date:'short'}}</p>
+    </li>
+</ul>
+
+<!-- All User list -->
+<div id="allUsers">
+    <h3>List of other users (click to view profile):</h3>
+    <ul *ngFor="let u of allUsers">
+        <li><a [routerLink]="['/user', u._id]">{{u.name}}</a></li>
+    </ul>
+</div>

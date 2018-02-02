@@ -1,0 +1,26 @@
+<h1>{{displayedUser['name']}}'s Bucket List</h1>
+<a [routerLink]="['/dashboard']">Home</a>
+<a href="/logout">Log Out</a>
+
+<div>
+  <h3>Done</h3>
+    <ul *ngFor="let item of userList">
+      <li *ngIf="item.status == true">
+        <ng-container *ngIf="item.creator == userName">
+          <input type="checkbox" class="listitem" [(ngModel)]="list.status" name="status" (click)="checkbox(item._id)"> <!--disable if not user-->
+        </ng-container>
+        <p class="listitem">{{item.creator}} | {{item.title}} - {{item.desc}} - {{item.createdAt | date:'short'}}</p>
+      </li>
+    </ul>
+</div>
+<div>
+  <h3>pending</h3>
+    <ul *ngFor="let i of userList">
+      <li *ngIf="i.status == false">
+        <ng-container *ngIf="i.creator == userName">
+          <input type="checkbox" class="listitem" name="status" (click)="checkbox(i._id)"> <!--disable if not user-->
+        </ng-container>
+        <p class="listitem">{{i.creator}} | {{i.title}} - {{i.desc}} - {{i.createdAt | date:'short'}}</p>
+      </li>
+    </ul>
+  </div>
